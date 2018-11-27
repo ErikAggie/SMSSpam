@@ -53,8 +53,10 @@ public class MainClass {
     }
 
     private static String processLine(String line) {
-        // Replace all 'Â' 194 characters
+        // Replace all 'Â' (unicode 194) characters
         line = line.replaceAll("\u00C2", "");
+        // Lots of "&amp;"s in there
+        line = line.replaceAll("&amp;", "&");
 
         Matcher startQuoteMatcher = startQuotePattern.matcher(line);
         if ( startQuoteMatcher.matches()) {
