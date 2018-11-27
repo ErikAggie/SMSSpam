@@ -53,16 +53,19 @@ public class MainClass {
     }
 
     private static String processLine(String line) {
+        // Replace all 'Â' 194 characters
+        line = line.replaceAll("\u00C2", "");
+
         Matcher startQuoteMatcher = startQuotePattern.matcher(line);
         if ( startQuoteMatcher.matches()) {
             line = startQuoteMatcher.group(1) + "\t" + startQuoteMatcher.group(2);
-            System.out.println("Corrected (1) " + line);
+            //System.out.println("Corrected (1) " + line);
         }
 
         Matcher endQuoteMatcher = endQuotePattern.matcher(line);
         if ( endQuoteMatcher.matches()) {
             line = endQuoteMatcher.group(1);
-            System.out.println("Corrected (2) " + line);
+            //System.out.println("Corrected (2) " + line);
         }
         return line;
     }
