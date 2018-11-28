@@ -3,10 +3,12 @@ package com.example.main;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.nio.charset.StandardCharsets;
 import java.util.regex.Matcher;
@@ -21,8 +23,8 @@ public class MainClass {
                new File(directory + "Original Test Data.txt")};
 
     private static final File[] translatedFiles =
-            {  new File(directory + "Updated Training Data.txt"),
-                    new File(directory + "Updated Test Data.txt")};
+            {  new File(directory + "Training Data.txt"),
+                    new File(directory + "Test Data.txt")};
 
     private static final Pattern startQuotePattern = Pattern.compile("^(spam|ham)\\t\"(.*)");
     private static final Pattern endQuotePattern = Pattern.compile("(.*)\"$");
@@ -36,13 +38,14 @@ public class MainClass {
 
     private static void processFile(File source, File destination) {
         try (
-                BufferedReader reader = new BufferedReader(new FileReader(source));
+                BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(source), StandardCharsets.UTF_8));
                 OutputStreamWriter writer = new OutputStreamWriter(new FileOutputStream(destination), StandardCharsets.UTF_8);
         ) {
             if (destination.exists()) {
                 destination.delete();
             }
 
+            writer.write("Spam/Ham	SMS Text\n");
 
             String line;
             while ((line = reader.readLine()) != null) {
@@ -61,7 +64,7 @@ public class MainClass {
         // Lots of "&amp;"s in there
         line = line.replaceAll("&amp;", "&");
 
-        Matcher startQuoteMatcher = startQuotePattern.matcher(line);
+        /*Matcher startQuoteMatcher = startQuotePattern.matcher(line);
         if ( startQuoteMatcher.matches()) {
             line = startQuoteMatcher.group(1) + "\t" + startQuoteMatcher.group(2);
             //System.out.println("Corrected (1) " + line);
@@ -71,7 +74,7 @@ public class MainClass {
         if ( endQuoteMatcher.matches()) {
             line = endQuoteMatcher.group(1);
             //System.out.println("Corrected (2) " + line);
-        }
+        }*/
         return line;
     }
 }
