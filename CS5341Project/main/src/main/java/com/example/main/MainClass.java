@@ -26,7 +26,7 @@ public class MainClass {
             {  new File(directory + "Training Data.txt"),
                     new File(directory + "Test Data.txt")};
 
-    private static final Pattern startQuotePattern = Pattern.compile("^(spam|ham)\\t\"(.*)");
+    private static final Pattern startJunk = Pattern.compile("^.*(spam|ham)(\\t.*)");
     private static final Pattern endQuotePattern = Pattern.compile("(.*)\"$");
 
 
@@ -59,6 +59,19 @@ public class MainClass {
     }
 
     private static String processLine(String line) {
+        if ( !line.startsWith("ham\t") && !line.startsWith("spam\t")) {
+            // One line starts with a junk character...
+            line = line.replaceAll("\uFEFF", "");
+        }
+        if ( line.startsWith("ham ")) {
+            line = line.replaceFirst("ham ", "ham\t");
+        }
+        if ( line.startsWith("spam ")) {
+            line = line.replaceFirst("spam ", "spam\t");
+        }
+        if ( !line.startsWith("ham\t") && !line.startsWith("spam\t")) {
+            System.err.println("Failed to fix " + line);
+        }
         // Replace all 'Â' (unicode 194) characters
         line = line.replaceAll("\u00C2", "");
         // Lots of "&amp;"s in there
