@@ -42,10 +42,12 @@ public class MainClass {
     private static void processFile(File source, File destination) {
         try (
                 BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(source), StandardCharsets.UTF_8));
-                OutputStreamWriter writer = new OutputStreamWriter(new FileOutputStream(destination), StandardCharsets.UTF_8);
+                OutputStreamWriter writer = new OutputStreamWriter(new FileOutputStream(destination), StandardCharsets.UTF_8)
         ) {
             if (destination.exists()) {
-                destination.delete();
+                if ( !destination.delete()) {
+                    System.out.println("Error returned when deleting existing version of " + destination.getAbsolutePath() + "; creating the file may error out.");
+                }
             }
 
             writer.write("Spam/Ham	SMS Text\n");
@@ -83,7 +85,6 @@ public class MainClass {
         // Take care of html codes. There aren't that many, so we'll be a bit brute-force
         Matcher htmlCharacterMatcher = htmlCharacterPattern.matcher(line);
         if (htmlCharacterMatcher.find()) {
-            String oldLine = line;
             for ( String key : htmlMappings.keySet()) {
                 line = line.replaceAll(key, htmlMappings.get(key));
             }
