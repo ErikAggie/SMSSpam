@@ -10,6 +10,7 @@ import java.io.OutputStreamWriter;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.TreeMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -35,8 +36,54 @@ public class MainClass {
     }};
 
     private static final Map<String, String> otherReplacements = new HashMap<String, String>() {{
-        // Unicode character 194 ('Â') shows up a lot for some reason
+        // Unicode character 194 ('Â') shows up a lot with other (true) characters
         put("\u00C2", "");
+        // Odd set of characters that ought to be a "'"
+        put("\u00E2\u20AC\u02DC", "'");
+        // Two characters that (I think) should be a pound symbol
+        put("\u00C3\u00BA", "\u00A3");
+        // A character combination for 1/4
+        put("\u00C3\u00BC", "\u00BC");
+        // A combo I think ought to be 'U'
+        put("\u00C3\u0153", "U");
+        // A combo I think ought to be '!'
+        put("\u00e2\u20ac\u00a6", "!");
+        // Something I don't think should be there: É/é followed by a space
+        put("\u00c9", "");
+        put("\u00e9 ", "");
+        // No idea what this was supposed to be (!鈥┾??〨)
+        put("!\u9225\u253e\\?\\?\u3028", "");
+        // Not sure what this is, either: Ã¨n
+        put("\u00c3\u00a8n", "");
+        // Another unsure one: â€œ
+        put("\u00e2\u20ac\u0153", "");
+        // See above: â€“
+        put("\u00e2\u20ac\u201c ", "");
+
+
+        // Different "U/u" that I think is misinterpreted
+        put("\u00dc", "U");
+        put("\u00fc", "u");
+        // Ought to be 'i'
+        put("\u00ec", "i");
+        // Ought to be '
+        put("\u0091", "\'");
+        put("\u0092", "\'");
+        // Don't know about thes...
+        put("\u0093", "");
+        put("\u0096 ", "");
+        // Guessing space...
+        put("\u0094", " ");
+    }};
+
+    // Characters that are fine
+    private static final Map<Integer, Object> charactersToIgnore = new TreeMap<Integer, Object>() {{
+        put(0xa3, null);
+        put(0xbc, null);
+        put(0x2019, null);
+        put(0x201d, null);
+        put(0x2018, null);
+        put(0x2026, null);
     }};
 
     public static void main(String[] args) {
@@ -98,6 +145,13 @@ public class MainClass {
         // Other replacements. Again we'll do it the brute-force way
         for ( String key : otherReplacements.keySet()) {
             line = line.replaceAll(key, otherReplacements.get(key));
+        }
+
+        for ( char character : line.toCharArray()) {
+            int value = (int) character;
+            if ( value > 150 && !charactersToIgnore.containsKey(value)) {
+                System.out.println(character + " (" + Integer.toHexString(value) + ") in " + line);
+            }
         }
 
         return line;
