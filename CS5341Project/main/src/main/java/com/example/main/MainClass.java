@@ -1,37 +1,40 @@
 package com.example.main;
 
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.nio.charset.StandardCharsets;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class MainClass {
 
-    private static final String directory = "C:\\Users\\erika\\OneDrive\\School\\Patterns\\Project\\";
+    private static final String sourceDirectory = "C:\\Users\\erika\\OneDrive\\School\\Patterns\\Project\\";
+    private static final String destDirectory = "C:\\Users\\erika\\SMSSpamRepo\\";
 
     private static final File[] originalFiles =
-            {  new File(directory + "Original Training Data.txt"),
-               new File(directory + "Original Test Data.txt")};
+            {  new File(sourceDirectory + "Original Training Data.txt"),
+               new File(sourceDirectory + "Original Test Data.txt")};
 
     private static final File[] translatedFiles =
-            {  new File(directory + "Training Data.txt"),
-                    new File(directory + "Test Data.txt")};
+            {  new File(destDirectory + "Training Data.txt"),
+                    new File(destDirectory + "Test Data.txt")};
 
-    private static final Pattern startJunk = Pattern.compile("^.*(spam|ham)(\\t.*)");
-    private static final Pattern endQuotePattern = Pattern.compile("(.*)\"$");
+    private static final Pattern htmlCharacterPattern = Pattern.compile("(&.*?;)");
 
+    private static final Map<String, String> htmlMappings = new HashMap<String, String>() {{
+        put("&lt;", "<");
+        put("&gt;", ">");
+        put("&amp;", "&");
+    }};
 
     public static void main(String[] args) {
-
         processFile(originalFiles[0], translatedFiles[0]);
         processFile(originalFiles[1], translatedFiles[1]);
     }
@@ -59,10 +62,14 @@ public class MainClass {
     }
 
     private static String processLine(String line) {
+        // Fix line start
+
+        // One line starts with a junk character...
         if ( !line.startsWith("ham\t") && !line.startsWith("spam\t")) {
-            // One line starts with a junk character...
             line = line.replaceAll("\uFEFF", "");
         }
+
+        // Replace starting space with a tab (again, only one line, I believe)
         if ( line.startsWith("ham ")) {
             line = line.replaceFirst("ham ", "ham\t");
         }
@@ -72,22 +79,20 @@ public class MainClass {
         if ( !line.startsWith("ham\t") && !line.startsWith("spam\t")) {
             System.err.println("Failed to fix " + line);
         }
-        // Replace all 'Â' (unicode 194) characters
+
+        // Take care of html codes. There aren't that many, so we'll be a bit brute-force
+        Matcher htmlCharacterMatcher = htmlCharacterPattern.matcher(line);
+        if (htmlCharacterMatcher.find()) {
+            String oldLine = line;
+            for ( String key : htmlMappings.keySet()) {
+                line = line.replaceAll(key, htmlMappings.get(key));
+            }
+        }
+
+        // Get rid fo all 'Â' (unicode 194) characters
         line = line.replaceAll("\u00C2", "");
         // Lots of "&amp;"s in there
         line = line.replaceAll("&amp;", "&");
-
-        /*Matcher startQuoteMatcher = startQuotePattern.matcher(line);
-        if ( startQuoteMatcher.matches()) {
-            line = startQuoteMatcher.group(1) + "\t" + startQuoteMatcher.group(2);
-            //System.out.println("Corrected (1) " + line);
-        }
-
-        Matcher endQuoteMatcher = endQuotePattern.matcher(line);
-        if ( endQuoteMatcher.matches()) {
-            line = endQuoteMatcher.group(1);
-            //System.out.println("Corrected (2) " + line);
-        }*/
         return line;
     }
 }
