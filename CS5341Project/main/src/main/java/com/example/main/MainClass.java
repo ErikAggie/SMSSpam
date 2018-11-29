@@ -34,6 +34,11 @@ public class MainClass {
         put("&amp;", "&");
     }};
 
+    private static final Map<String, String> otherReplacements = new HashMap<String, String>() {{
+        // Unicode character 194 ('Â') shows up a lot for some reason
+        put("\u00C2", "");
+    }};
+
     public static void main(String[] args) {
         processFile(originalFiles[0], translatedFiles[0]);
         processFile(originalFiles[1], translatedFiles[1]);
@@ -90,10 +95,11 @@ public class MainClass {
             }
         }
 
-        // Get rid fo all 'Â' (unicode 194) characters
-        line = line.replaceAll("\u00C2", "");
-        // Lots of "&amp;"s in there
-        line = line.replaceAll("&amp;", "&");
+        // Other replacements. Again we'll do it the brute-force way
+        for ( String key : otherReplacements.keySet()) {
+            line = line.replaceAll(key, otherReplacements.get(key));
+        }
+
         return line;
     }
 }
