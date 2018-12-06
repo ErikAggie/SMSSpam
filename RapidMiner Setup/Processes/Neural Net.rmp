@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?><process version="9.0.003">
+  <context>
+    <input/>
+    <output/>
+    <macros/>
+  </context>
+  <operator activated="true" class="process" compatibility="9.0.003" expanded="true" name="Process">
+    <parameter key="logverbosity" value="init"/>
+    <parameter key="random_seed" value="2001"/>
+    <parameter key="send_mail" value="never"/>
+    <parameter key="notification_email" value=""/>
+    <parameter key="process_duration_for_mail" value="30"/>
+    <parameter key="encoding" value="SYSTEM"/>
+    <process expanded="true">
+      <operator activated="false" class="retrieve" compatibility="9.0.003" expanded="true" height="68" name="Retrieve TrainingSMSMessages" width="90" x="45" y="34">
+        <parameter key="repository_entry" value="../Data/TrainingSMSMessages"/>
+      </operator>
+      <operator activated="false" class="retrieve" compatibility="9.0.003" expanded="true" height="68" name="Retrieve TestSMSMessages" width="90" x="246" y="34">
+        <parameter key="repository_entry" value="../Data/TestSMSMessages"/>
+      </operator>
+      <operator activated="false" class="weight_by_information_gain" compatibility="9.0.003" expanded="true" height="82" name="Weight by Information Gain" width="90" x="246" y="442">
+        <parameter key="normalize_weights" value="false"/>
+        <parameter key="sort_weights" value="true"/>
+        <parameter key="sort_direction" value="ascending"/>
+      </operator>
+      <operator activated="false" class="select_by_weights" compatibility="9.0.003" expanded="true" height="103" name="Select by Weights" width="90" x="112" y="493">
+        <parameter key="weight_relation" value="greater equals"/>
+        <parameter key="weight" value="0.005"/>
+        <parameter key="k" value="10"/>
+        <parameter key="p" value="0.5"/>
+        <parameter key="deselect_unknown" value="true"/>
+        <parameter key="use_absolute_weights" value="true"/>
+      </operator>
+      <operator activated="false" class="select_by_weights" compatibility="9.0.003" expanded="true" height="103" name="Select by Weights (2)" width="90" x="447" y="595">
+        <parameter key="weight_relation" value="greater equals"/>
+        <parameter key="weight" value="0.005"/>
+        <parameter key="k" value="10"/>
+        <parameter key="p" value="0.5"/>
+        <parameter key="deselect_unknown" value="true"/>
+        <parameter key="use_absolute_weights" value="true"/>
+      </operator>
+      <operator activated="true" class="retrieve" compatibility="9.0.003" expanded="true" height="68" name="Retrieve Training Data" width="90" x="45" y="136">
+        <parameter key="repository_entry" value="../Data/Training Data"/>
+      </operator>
+      <operator activated="true" class="retrieve" compatibility="9.0.003" expanded="true" height="68" name="Retrieve Test Data" width="90" x="45" y="238">
+        <parameter key="repository_entry" value="../Data/Test Data"/>
+      </operator>
+      <operator activated="true" class="productivity:execute_process" compatibility="9.0.003" expanded="true" height="82" name="Tokenize" width="90" x="179" y="187">
+        <parameter key="process_location" value="//CS5341Project/Processes/Tokenize"/>
+        <parameter key="use_input" value="true"/>
+        <parameter key="store_output" value="false"/>
+        <parameter key="propagate_metadata_recursively" value="true"/>
+        <parameter key="cache_process" value="true"/>
+        <list key="macros"/>
+        <parameter key="fail_for_unknown_macros" value="true"/>
+      </operator>
+      <operator activated="false" class="productivity:execute_process" compatibility="9.0.003" expanded="true" height="68" name="SVM weights" width="90" x="447" y="34">
+        <parameter key="process_location" value="Select by Weights and SVM"/>
+        <parameter key="use_input" value="true"/>
+        <parameter key="store_output" value="false"/>
+        <parameter key="propagate_metadata_recursively" value="true"/>
+        <parameter key="cache_process" value="true"/>
+        <list key="macros"/>
+        <parameter key="fail_for_unknown_macros" value="true"/>
+      </operator>
+      <operator activated="true" class="principal_component_analysis" compatibility="9.0.003" expanded="true" height="103" name="PCA" width="90" x="447" y="187">
+        <parameter key="dimensionality_reduction" value="keep variance"/>
+        <parameter key="variance_threshold" value="0.9"/>
+        <parameter key="number_of_components" value="1"/>
+      </operator>
+      <operator activated="true" class="neural_net" compatibility="9.0.003" expanded="true" height="82" name="Neural Net" width="90" x="648" y="136">
+        <list key="hidden_layers">
+          <parameter key="First" value="10"/>
+        </list>
+        <parameter key="training_cycles" value="200"/>
+        <parameter key="learning_rate" value="0.2"/>
+        <parameter key="momentum" value="0.2"/>
+        <parameter key="decay" value="false"/>
+        <parameter key="shuffle" value="true"/>
+        <parameter key="normalize" value="true"/>
+        <parameter key="error_epsilon" value="1.0E-4"/>
+        <parameter key="use_local_random_seed" value="false"/>
+        <parameter key="local_random_seed" value="1992"/>
+      </operator>
+      <operator activated="true" class="apply_model" compatibility="9.0.003" expanded="true" height="82" name="Apply Model (2)" width="90" x="447" y="340">
+        <list key="application_parameters"/>
+        <parameter key="create_view" value="false"/>
+      </operator>
+      <operator activated="true" class="apply_model" compatibility="9.0.003" expanded="true" height="82" name="Apply Model" width="90" x="648" y="340">
+        <list key="application_parameters"/>
+        <parameter key="create_view" value="false"/>
+      </operator>
+      <operator activated="true" class="performance" compatibility="9.0.003" expanded="true" height="82" name="Neural Net Results" width="90" x="1050" y="289">
+        <parameter key="use_example_weights" value="true"/>
+      </operator>
+      <connect from_op="Retrieve Training Data" from_port="output" to_op="Tokenize" to_port="input 1"/>
+      <connect from_op="Retrieve Test Data" from_port="output" to_op="Tokenize" to_port="input 2"/>
+      <connect from_op="Tokenize" from_port="result 1" to_op="PCA" to_port="example set input"/>
+      <connect from_op="Tokenize" from_port="result 2" to_op="Apply Model (2)" to_port="unlabelled data"/>
+      <connect from_op="PCA" from_port="example set output" to_op="Neural Net" to_port="training set"/>
+      <connect from_op="PCA" from_port="preprocessing model" to_op="Apply Model (2)" to_port="model"/>
+      <connect from_op="Neural Net" from_port="model" to_op="Apply Model" to_port="model"/>
+      <connect from_op="Apply Model (2)" from_port="labelled data" to_op="Apply Model" to_port="unlabelled data"/>
+      <connect from_op="Apply Model" from_port="labelled data" to_op="Neural Net Results" to_port="labelled data"/>
+      <connect from_op="Neural Net Results" from_port="performance" to_port="result 1"/>
+      <portSpacing port="source_input 1" spacing="0"/>
+      <portSpacing port="sink_result 1" spacing="0"/>
+      <portSpacing port="sink_result 2" spacing="0"/>
+    </process>
+  </operator>
+</process>
