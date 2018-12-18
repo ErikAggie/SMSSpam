@@ -1,0 +1,940 @@
+
+%% bare_jrnl_compsoc.tex
+%% V1.4b
+%% 2015/08/26
+%% by Michael Shell
+%% See:
+%% http://www.michaelshell.org/
+%% for current contact information.
+%%
+%% This is a skeleton file demonstrating the use of IEEEtran.cls
+%% (requires IEEEtran.cls version 1.8b or later) with an IEEE
+%% Computer Society journal paper.
+%%
+%% Support sites:
+%% http://www.michaelshell.org/tex/ieeetran/
+%% http://www.ctan.org/pkg/ieeetran
+%% and
+%% http://www.ieee.org/
+
+%%*************************************************************************
+%% Legal Notice:
+%% This code is offered as-is without any warranty either expressed or
+%% implied; without even the implied warranty of MERCHANTABILITY or
+%% FITNESS FOR A PARTICULAR PURPOSE! 
+%% User assumes all risk.
+%% In no event shall the IEEE or any contributor to this code be liable for
+%% any damages or losses, including, but not limited to, incidental,
+%% consequential, or any other damages, resulting from the use or misuse
+%% of any information contained here.
+%%
+%% All comments are the opinions of their respective authors and are not
+%% necessarily endorsed by the IEEE.
+%%
+%% This work is distributed under the LaTeX Project Public License (LPPL)
+%% ( http://www.latex-project.org/ ) version 1.3, and may be freely used,
+%% distributed and modified. A copy of the LPPL, version 1.3, is included
+%% in the base LaTeX documentation of all distributions of LaTeX released
+%% 2003/12/01 or later.
+%% Retain all contribution notices and credits.
+%% ** Modified files should be clearly indicated as such, including  **
+%% ** renaming them and changing author support contact information. **
+%%*************************************************************************
+
+
+% *** Authors should verify (and, if needed, correct) their LaTeX system  ***
+% *** with the testflow diagnostic prior to trusting their LaTeX platform ***
+% *** with production work. The IEEE's font choices and paper sizes can   ***
+% *** trigger bugs that do not appear when using other class files.       ***                          ***
+% The testflow support page is at:
+% http://www.michaelshell.org/tex/testflow/
+
+
+\documentclass[10pt,journal,compsoc]{IEEEtran}
+%
+% If IEEEtran.cls has not been installed into the LaTeX system files,
+% manually specify the path to it like:
+% \documentclass[10pt,journal,compsoc]{../sty/IEEEtran}
+
+
+
+
+
+% Some very useful LaTeX packages include:
+% (uncomment the ones you want to load)
+
+
+% *** MISC UTILITY PACKAGES ***
+%
+%\usepackage{ifpdf}
+% Heiko Oberdiek's ifpdf.sty is very useful if you need conditional
+% compilation based on whether the output is pdf or dvi.
+% usage:
+% \ifpdf
+%   % pdf code
+% \else
+%   % dvi code
+% \fi
+% The latest version of ifpdf.sty can be obtained from:
+% http://www.ctan.org/pkg/ifpdf
+% Also, note that IEEEtran.cls V1.7 and later provides a builtin
+% \ifCLASSINFOpdf conditional that works the same way.
+% When switching from latex to pdflatex and vice-versa, the compiler may
+% have to be run twice to clear warning/error messages.
+
+
+
+
+
+
+% *** CITATION PACKAGES ***
+%
+\ifCLASSOPTIONcompsoc
+  % IEEE Computer Society needs nocompress option
+  % requires cite.sty v4.0 or later (November 2003)
+  \usepackage[nocompress]{cite}
+\else
+  % normal IEEE
+  \usepackage{cite}
+\fi
+% cite.sty was written by Donald Arseneau
+% V1.6 and later of IEEEtran pre-defines the format of the cite.sty package
+% \cite{} output to follow that of the IEEE. Loading the cite package will
+% result in citation numbers being automatically sorted and properly
+% "compressed/ranged". e.g., [1], [9], [2], [7], [5], [6] without using
+% cite.sty will become [1], [2], [5]--[7], [9] using cite.sty. cite.sty's
+% \cite will automatically add leading space, if needed. Use cite.sty's
+% noadjust option (cite.sty V3.8 and later) if you want to turn this off
+% such as if a citation ever needs to be enclosed in parenthesis.
+% cite.sty is already installed on most LaTeX systems. Be sure and use
+% version 5.0 (2009-03-20) and later if using hyperref.sty.
+% The latest version can be obtained at:
+% http://www.ctan.org/pkg/cite
+% The documentation is contained in the cite.sty file itself.
+%
+% Note that some packages require special options to format as the Computer
+% Society requires. In particular, Computer Society  papers do not use
+% compressed citation ranges as is done in typical IEEE papers
+% (e.g., [1]-[4]). Instead, they list every citation separately in order
+% (e.g., [1], [2], [3], [4]). To get the latter we need to load the cite
+% package with the nocompress option which is supported by cite.sty v4.0
+% and later. Note also the use of a CLASSOPTION conditional provided by
+% IEEEtran.cls V1.7 and later.
+
+
+
+
+
+% *** GRAPHICS RELATED PACKAGES ***
+%
+\ifCLASSINFOpdf
+  % \usepackage[pdftex]{graphicx}
+  % declare the path(s) where your graphic files are
+  % \graphicspath{{../pdf/}{../jpeg/}}
+  % and their extensions so you won't have to specify these with
+  % every instance of \includegraphics
+  % \DeclareGraphicsExtensions{.pdf,.jpeg,.png}
+\else
+  % or other class option (dvipsone, dvipdf, if not using dvips). graphicx
+  % will default to the driver specified in the system graphics.cfg if no
+  % driver is specified.
+  % \usepackage[dvips]{graphicx}
+  % declare the path(s) where your graphic files are
+  % \graphicspath{{../eps/}}
+  % and their extensions so you won't have to specify these with
+  % every instance of \includegraphics
+  % \DeclareGraphicsExtensions{.eps}
+\fi
+% graphicx was written by David Carlisle and Sebastian Rahtz. It is
+% required if you want graphics, photos, etc. graphicx.sty is already
+% installed on most LaTeX systems. The latest version and documentation
+% can be obtained at: 
+% http://www.ctan.org/pkg/graphicx
+% Another good source of documentation is "Using Imported Graphics in
+% LaTeX2e" by Keith Reckdahl which can be found at:
+% http://www.ctan.org/pkg/epslatex
+%
+% latex, and pdflatex in dvi mode, support graphics in encapsulated
+% postscript (.eps) format. pdflatex in pdf mode supports graphics
+% in .pdf, .jpeg, .png and .mps (metapost) formats. Users should ensure
+% that all non-photo figures use a vector format (.eps, .pdf, .mps) and
+% not a bitmapped formats (.jpeg, .png). The IEEE frowns on bitmapped formats
+% which can result in "jaggedy"/blurry rendering of lines and letters as
+% well as large increases in file sizes.
+%
+% You can find documentation about the pdfTeX application at:
+% http://www.tug.org/applications/pdftex
+
+
+
+
+
+
+% *** MATH PACKAGES ***
+%
+%\usepackage{amsmath}
+% A popular package from the American Mathematical Society that provides
+% many useful and powerful commands for dealing with mathematics.
+%
+% Note that the amsmath package sets \interdisplaylinepenalty to 10000
+% thus preventing page breaks from occurring within multiline equations. Use:
+%\interdisplaylinepenalty=2500
+% after loading amsmath to restore such page breaks as IEEEtran.cls normally
+% does. amsmath.sty is already installed on most LaTeX systems. The latest
+% version and documentation can be obtained at:
+% http://www.ctan.org/pkg/amsmath
+
+
+
+
+
+% *** SPECIALIZED LIST PACKAGES ***
+%
+%\usepackage{algorithmic}
+% algorithmic.sty was written by Peter Williams and Rogerio Brito.
+% This package provides an algorithmic environment fo describing algorithms.
+% You can use the algorithmic environment in-text or within a figure
+% environment to provide for a floating algorithm. Do NOT use the algorithm
+% floating environment provided by algorithm.sty (by the same authors) or
+% algorithm2e.sty (by Christophe Fiorio) as the IEEE does not use dedicated
+% algorithm float types and packages that provide these will not provide
+% correct IEEE style captions. The latest version and documentation of
+% algorithmic.sty can be obtained at:
+% http://www.ctan.org/pkg/algorithms
+% Also of interest may be the (relatively newer and more customizable)
+% algorithmicx.sty package by Szasz Janos:
+% http://www.ctan.org/pkg/algorithmicx
+
+
+
+
+% *** ALIGNMENT PACKAGES ***
+%
+%\usepackage{array}
+% Frank Mittelbach's and David Carlisle's array.sty patches and improves
+% the standard LaTeX2e array and tabular environments to provide better
+% appearance and additional user controls. As the default LaTeX2e table
+% generation code is lacking to the point of almost being broken with
+% respect to the quality of the end results, all users are strongly
+% advised to use an enhanced (at the very least that provided by array.sty)
+% set of table tools. array.sty is already installed on most systems. The
+% latest version and documentation can be obtained at:
+% http://www.ctan.org/pkg/array
+
+
+% IEEEtran contains the IEEEeqnarray family of commands that can be used to
+% generate multiline equations as well as matrices, tables, etc., of high
+% quality.
+
+
+
+
+% *** SUBFIGURE PACKAGES ***
+%\ifCLASSOPTIONcompsoc
+%  \usepackage[caption=false,font=footnotesize,labelfont=sf,textfont=sf]{subfig}
+%\else
+%  \usepackage[caption=false,font=footnotesize]{subfig}
+%\fi
+% subfig.sty, written by Steven Douglas Cochran, is the modern replacement
+% for subfigure.sty, the latter of which is no longer maintained and is
+% incompatible with some LaTeX packages including fixltx2e. However,
+% subfig.sty requires and automatically loads Axel Sommerfeldt's caption.sty
+% which will override IEEEtran.cls' handling of captions and this will result
+% in non-IEEE style figure/table captions. To prevent this problem, be sure
+% and invoke subfig.sty's "caption=false" package option (available since
+% subfig.sty version 1.3, 2005/06/28) as this is will preserve IEEEtran.cls
+% handling of captions.
+% Note that the Computer Society format requires a sans serif font rather
+% than the serif font used in traditional IEEE formatting and thus the need
+% to invoke different subfig.sty package options depending on whether
+% compsoc mode has been enabled.
+%
+% The latest version and documentation of subfig.sty can be obtained at:
+% http://www.ctan.org/pkg/subfig
+
+
+
+
+% *** FLOAT PACKAGES ***
+%
+%\usepackage{fixltx2e}
+% fixltx2e, the successor to the earlier fix2col.sty, was written by
+% Frank Mittelbach and David Carlisle. This package corrects a few problems
+% in the LaTeX2e kernel, the most notable of which is that in current
+% LaTeX2e releases, the ordering of single and double column floats is not
+% guaranteed to be preserved. Thus, an unpatched LaTeX2e can allow a
+% single column figure to be placed prior to an earlier double column
+% figure.
+% Be aware that LaTeX2e kernels dated 2015 and later have fixltx2e.sty's
+% corrections already built into the system in which case a warning will
+% be issued if an attempt is made to load fixltx2e.sty as it is no longer
+% needed.
+% The latest version and documentation can be found at:
+% http://www.ctan.org/pkg/fixltx2e
+
+
+%\usepackage{stfloats}
+% stfloats.sty was written by Sigitas Tolusis. This package gives LaTeX2e
+% the ability to do double column floats at the bottom of the page as well
+% as the top. (e.g., "\begin{figure*}[!b]" is not normally possible in
+% LaTeX2e). It also provides a command:
+%\fnbelowfloat
+% to enable the placement of footnotes below bottom floats (the standard
+% LaTeX2e kernel puts them above bottom floats). This is an invasive package
+% which rewrites many portions of the LaTeX2e float routines. It may not work
+% with other packages that modify the LaTeX2e float routines. The latest
+% version and documentation can be obtained at:
+% http://www.ctan.org/pkg/stfloats
+% Do not use the stfloats baselinefloat ability as the IEEE does not allow
+% \baselineskip to stretch. Authors submitting work to the IEEE should note
+% that the IEEE rarely uses double column equations and that authors should try
+% to avoid such use. Do not be tempted to use the cuted.sty or midfloat.sty
+% packages (also by Sigitas Tolusis) as the IEEE does not format its papers in
+% such ways.
+% Do not attempt to use stfloats with fixltx2e as they are incompatible.
+% Instead, use Morten Hogholm'a dblfloatfix which combines the features
+% of both fixltx2e and stfloats:
+%
+% \usepackage{dblfloatfix}
+% The latest version can be found at:
+% http://www.ctan.org/pkg/dblfloatfix
+
+
+
+
+%\ifCLASSOPTIONcaptionsoff
+%  \usepackage[nomarkers]{endfloat}
+% \let\MYoriglatexcaption\caption
+% \renewcommand{\caption}[2][\relax]{\MYoriglatexcaption[#2]{#2}}
+%\fi
+% endfloat.sty was written by James Darrell McCauley, Jeff Goldberg and 
+% Axel Sommerfeldt. This package may be useful when used in conjunction with 
+% IEEEtran.cls'  captionsoff option. Some IEEE journals/societies require that
+% submissions have lists of figures/tables at the end of the paper and that
+% figures/tables without any captions are placed on a page by themselves at
+% the end of the document. If needed, the draftcls IEEEtran class option or
+% \CLASSINPUTbaselinestretch interface can be used to increase the line
+% spacing as well. Be sure and use the nomarkers option of endfloat to
+% prevent endfloat from "marking" where the figures would have been placed
+% in the text. The two hack lines of code above are a slight modification of
+% that suggested by in the endfloat docs (section 8.4.1) to ensure that
+% the full captions always appear in the list of figures/tables - even if
+% the user used the short optional argument of \caption[]{}.
+% IEEE papers do not typically make use of \caption[]'s optional argument,
+% so this should not be an issue. A similar trick can be used to disable
+% captions of packages such as subfig.sty that lack options to turn off
+% the subcaptions:
+% For subfig.sty:
+% \let\MYorigsubfloat\subfloat
+% \renewcommand{\subfloat}[2][\relax]{\MYorigsubfloat[]{#2}}
+% However, the above trick will not work if both optional arguments of
+% the \subfloat command are used. Furthermore, there needs to be a
+% description of each subfigure *somewhere* and endfloat does not add
+% subfigure captions to its list of figures. Thus, the best approach is to
+% avoid the use of subfigure captions (many IEEE journals avoid them anyway)
+% and instead reference/explain all the subfigures within the main caption.
+% The latest version of endfloat.sty and its documentation can obtained at:
+% http://www.ctan.org/pkg/endfloat
+%
+% The IEEEtran \ifCLASSOPTIONcaptionsoff conditional can also be used
+% later in the document, say, to conditionally put the References on a 
+% page by themselves.
+
+
+
+
+% *** PDF, URL AND HYPERLINK PACKAGES ***
+%
+%\usepackage{url}
+% url.sty was written by Donald Arseneau. It provides better support for
+% handling and breaking URLs. url.sty is already installed on most LaTeX
+% systems. The latest version and documentation can be obtained at:
+% http://www.ctan.org/pkg/url
+% Basically, \url{my_url_here}.
+
+
+
+
+
+% *** Do not adjust lengths that control margins, column widths, etc. ***
+% *** Do not use packages that alter fonts (such as pslatex).         ***
+% There should be no need to do such things with IEEEtran.cls V1.6 and later.
+% (Unless specifically asked to do so by the journal or conference you plan
+% to submit to, of course. )
+
+
+% correct bad hyphenation here
+\hyphenation{op-tical net-works semi-conduc-tor}
+
+
+\begin{document}
+%
+% paper title
+% Titles are generally capitalized except for words such as a, an, and, as,
+% at, but, by, for, in, nor, of, on, or, the, to and up, which are usually
+% not capitalized unless they are the first or last word of the title.
+% Linebreaks \\ can be used within to get better formatting as desired.
+% Do not put math or special symbols in the title.
+\title{SMS Spam Detection Project Report}
+%
+%
+% author names and IEEE memberships
+% note positions of commas and nonbreaking spaces ( ~ ) LaTeX will not break
+% a structure at a ~ so this keeps an author's name from being broken across
+% two lines.
+% use \thanks{} to gain access to the first footnote area
+% a separate \thanks must be used for each paragraph as LaTeX2e's \thanks
+% was not built to handle multiple paragraphs
+%
+%
+%\IEEEcompsocitemizethanks is a special \thanks that produces the bulleted
+% lists the Computer Society journals use for "first footnote" author
+% affiliations. Use \IEEEcompsocthanksitem which works much like \item
+% for each affiliation group. When not in compsoc mode,
+% \IEEEcompsocitemizethanks becomes like \thanks and
+% \IEEEcompsocthanksitem becomes a line break with idention. This
+% facilitates dual compilation, although admittedly the differences in the
+% desired content of \author between the different types of papers makes a
+% one-size-fits-all approach a daunting prospect. For instance, compsoc 
+% journal papers have the author affiliations above the "Manuscript
+% received ..."  text while in non-compsoc journals this is reversed. Sigh.
+
+\author{Erik Peterson}% <-this % stops a space
+
+% note the % following the last \IEEEmembership and also \thanks - 
+% these prevent an unwanted space from occurring between the last author name
+% and the end of the author line. i.e., if you had this:
+% 
+% \author{....lastname \thanks{...} \thanks{...} }
+%                     ^------------^------------^----Do not want these spaces!
+%
+% a space would be appended to the last name and could cause every name on that
+% line to be shifted left slightly. This is one of those "LaTeX things". For
+% instance, "\textbf{A} \textbf{B}" will typeset as "A B" not "AB". To get
+% "AB" then you have to do: "\textbf{A}\textbf{B}"
+% \thanks is no different in this regard, so shield the last } of each \thanks
+% that ends a line with a % and do not let a space in before the next \thanks.
+% Spaces after \IEEEmembership other than the last one are OK (and needed) as
+% you are supposed to have spaces between the names. For what it is worth,
+% this is a minor point as most people would not even notice if the said evil
+% space somehow managed to creep in.
+
+
+
+% The paper headers
+\markboth{SMS Spam Detection Project Report by Erik Peterson}%
+{Shell \MakeLowercase{\textit{et al.}}: Bare Demo of IEEEtran.cls for Computer Society Journals}
+% The only time the second header will appear is for the odd numbered pages
+% after the title page when using the twoside option.
+% 
+% *** Note that you probably will NOT want to include the author's ***
+% *** name in the headers of peer review papers.                   ***
+% You can use \ifCLASSOPTIONpeerreview for conditional compilation here if
+% you desire.
+
+
+
+% The publisher's ID mark at the bottom of the page is less important with
+% Computer Society journal papers as those publications place the marks
+% outside of the main text columns and, therefore, unlike regular IEEE
+% journals, the available text space is not reduced by their presence.
+% If you want to put a publisher's ID mark on the page you can do it like
+% this:
+%\IEEEpubid{0000--0000/00\$00.00~\copyright~2015 IEEE}
+% or like this to get the Computer Society new two part style.
+%\IEEEpubid{\makebox[\columnwidth]{\hfill 0000--0000/00/\$00.00~\copyright~2015 IEEE}%
+%\hspace{\columnsep}\makebox[\columnwidth]{Published by the IEEE Computer Society\hfill}}
+% Remember, if you use this you must call \IEEEpubidadjcol in the second
+% column for its text to clear the IEEEpubid mark (Computer Society jorunal
+% papers don't need this extra clearance.)
+
+
+
+% use for special paper notices
+%\IEEEspecialpapernotice{(Invited Paper)}
+
+
+
+% for Computer Society papers, we must declare the abstract and index terms
+% PRIOR to the title within the \IEEEtitleabstractindextext IEEEtran
+% command as these need to go into the title area created by \maketitle.
+% As a general rule, do not put math, special symbols or citations
+% in the abstract or keywords.
+\IEEEtitleabstractindextext{%
+\begin{abstract}
+SMS (text) messages, due to their prolific use, are a rich breeding ground for spam. The small size of these messages can make spam detection difficult, and the instant nature of them means that long-running spam-catching algorithms are not viable. Machine learning offers a way to filter most spam messages while at the same time stopping very few legitimate messages. This paper examines several algorithms that provide varying degrees of spam protection and suggests a combination of algorithms to use in a spam filtering environment.
+\end{abstract}} 
+
+
+% make the title area
+\maketitle
+
+
+% To allow for easy dual compilation without having to reenter the
+% abstract/keywords data, the \IEEEtitleabstractindextext text will
+% not be used in maketitle, but will appear (i.e., to be "transported")
+% here as \IEEEdisplaynontitleabstractindextext when the compsoc 
+% or transmag modes are not selected <OR> if conference mode is selected 
+% - because all conference papers position the abstract like regular
+% papers do.
+\IEEEdisplaynontitleabstractindextext
+% \IEEEdisplaynontitleabstractindextext has no effect when using
+% compsoc or transmag under a non-conference mode.
+
+
+
+% For peer review papers, you can put extra information on the cover
+% page as needed:
+% \ifCLASSOPTIONpeerreview
+% \begin{center} \bfseries EDICS Category: 3-BBND \end{center}
+% \fi
+%
+% For peerreview papers, this IEEEtran command inserts a page break and
+% creates the second title. It will be ignored for other modes.
+\IEEEpeerreviewmaketitle
+
+
+
+\IEEEraisesectionheading{\section{Introduction}\label{sec:introduction}}
+% Computer Society journal (but not conference!) papers do something unusual
+% with the very first section heading (almost always called "Introduction").
+% They place it ABOVE the main text! IEEEtran.cls does not automatically do
+% this for you, but you can achieve this effect with the provided
+% \IEEEraisesectionheading{} command. Note the need to keep any \label that
+% is to refer to the section immediately after \section in the above as
+% \IEEEraisesectionheading puts \section within a raised box.
+
+
+
+
+% The very first letter is a 2 line initial drop letter followed
+% by the rest of the first word in caps (small caps for compsoc).
+% 
+% form to use if the first word consists of a single letter:
+% \IEEEPARstart{A}{demo} file is ....
+% 
+% form to use if you need the single drop letter followed by
+% normal text (unknown if ever used by the IEEE):
+% \IEEEPARstart{A}{}demo file is ....
+% 
+% Some journals put the first two words in caps:
+% \IEEEPARstart{T}{his demo} file is ....
+% 
+% Here we have the typical use of a "T" for an initial drop letter
+% and "HIS" in caps to complete the first word.
+\IEEEPARstart{S}{MS} messages, with their wide use (even wider when you add other instant messaging solutions) are a ripe breeding ground for spam. The short length of these messages, as well as the huge array of acronyms and other means of shortening messages it spawned, can make it difficult to tell what is a legitimate message and what represents spam.
+
+Almeida and Hildago created a corpus of SMS messages, including markings, in an effort to provide a useful set of test data to explore message filtering. This corpus contains 5,574 messages, of which 747 are spam. These messages are at \cite{SMS Collection}. They also authored a paper that details their initial efforts towards filtering spam messages. \cite{Paper}
+
+This paper extends the previous work by applying different algorithms. It also discusses the steps taken to prepare SMS messages for the machine learning algorithms. The goal is three-fold:
+
+\begin{enumerate}
+    \item Block as much spam as possible
+    \item Block few (ideally, no) legitimate messages
+    \item Apply a model quickly (to minimize any delay in delivering the messages)
+\end{enumerate}
+
+The rest of this paper is structured as follows. Section 2 deals the testing setup, including the RapidMiner software used to run the algorithms. Section 3 details the preprocessing necessary to use the text messages in a machine learning environment, as well as the means attempted to turn the text into numerical data in RapidMiner. Section 4 discusses the algorithms applied, detailing three algorithms that showed the best results. Section 5 deals with the results of the machine learning algorithms. Section 6 recommends a combination of machine learning algorithms to create a good filtering setup. Finally, Section 7 presents conclusions.
+
+\section{Testing Setup}
+
+The test machine is a Lenovo Flex 14" laptop running Windows 10. The laptop features an 8th-generation Intel Core i5 processor (4 cores/8 threads), 8 GB of RAM, and a 256 GB SSD.
+
+Much of the text preprocessing was done as a Java program created using Android Studio (as a standalone Java process rather than an Android app---I already had Android Studio installed, and it made little sense to install a separate IDE for this project).
+
+The tokenization, further preprocessing, and the machine learning algorithms were run in RapidMiner Free Edition, version 9.0.003. As this was my first real experience with RapidMiner, I used \cite{Site Ref 1} \cite{Site Ref 2} \cite{Site Ref 3}, and \cite{Site Ref 4} to help me get familiar with RapidMiner, and in particular text processing in RapidMiner.
+
+As done in the paper accompanying the SMS corpus, the data is split to create a training set (30\% of messages) and a test set (the remaining 70\% of the messages). \cite{Paper}
+
+The Java project, the resulting preprocessed text, and the detailed results of the algorithm runs is available at https://github.com/ErikAggie/SMSSpam.
+
+\section{Text Message Preprocessing}
+
+Preparing the provided text messages for machine learning was done in two steps: custom text cleanup and text preprocessing in RapidMiner.
+
+\subsection{Code-based Cleanup}
+
+The SMS message corpus \cite{SMS Collection} present some issues that, if left unresolved, could bias the machine learning algorithms. Many of these issues seem to be the result of a text encoding error: either the corpus was not saved properly or else Windows did not properly understand it.
+
+To correct these issues, the Java program makes the following changes to the messages:
+
+\begin{itemize}
+\item Removes any junk characters that appear at the beginning of a line.
+\item Ensures that each line in the file has a tab between the label and the messages (some had a space instead).
+\item Replaces some HTML strings with the proper character (\textless, \textgreater, and \&).
+\item Corrects a number of other characters/character combinations that are incorrect, likely the result of a file encoding issue. In some cases the actual character could not be determined; these characters are simply removed.
+\item Runs a check to see if any special characters remain.
+\end{itemize}
+
+Many numbers (likely phone numbers, for the most part) are not present in the SMS corpus, presumably for privacy reasons. This was left untouched. In theory such data could improve the performance of spam catching (i.e. if a specific number is in many spam messages, that would be a good token to use for discovering further spam messages), but for privacy reasons it might be wise to perform the same generalization when building and applying production models.
+
+\subsection{RapidMiner Text Preprocessing}
+
+The data created by the Java program was imported into RapidMiner as training and test datasets. Almeida, Hidalgo, and Yamakami proposed two sets of characters for tokenizing the data, which are replicated in this paper. The first (tok1) is space plus period, comma, and colon; the second (tok2) adds the dash character. \cite{Paper}
+
+Almeida, Hidalgo, and Yamakami did not attempt to process the data further, pointing to research into email spam that suggested that further processing tended to hurt spam filtering. \cite{Paper} To check that claim I ran extra tests using three text processing options layered on top of each other: converting messages to lowercase, removing stopwords, and creating n-grams (three).
+
+\begin{table}[!t]
+%% increase table row spacing, adjust to taste
+\renewcommand{\arraystretch}{1.3}
+% if using array.sty, it might be a good idea to tweak the value of
+% \extrarowheight as needed to properly center the text within the cells
+\caption{Preprocessing Performance with Perceptron}
+\label{Table 1}
+\centering
+%% Some packages, such as MDW tools, offer better commands for making tables
+%% than the plain LaTeX2e tabular which is used here.
+\begin{tabular}{|c|c|c|}
+\hline
+Preprocessing applied & Ham Blocked & Accuracy \\ \hline
+None & 0.24\% & 98.00\% \\ \hline
+Lowercase all & 0.21\% & 97.71\% \\ \hline
++filter stopwords, Stem (Porter) & 0.80\% & 96.97\% \\ \hline
++n-gram generation (3) & 0.62\% & 97.31\% \\ \hline
+
+\end{tabular}
+\end{table}
+
+As Almeida, Hidalgo, and Yamakami expected, \cite{Paper} there is a general degradation of performance as more processing is applied to the tokens, but the degredation is not uniform. kNN, for example, saw an uptick in performance when using tok1 and making all messages lowercase, but this was an exception. Perceptron (using token 1), shown in Table 1, is a typical case. ("Ham" in this and the other tables refers to legitimate text messages.)
+
+In addition, while making all text lowercase, filtering stopwords, and stemming can reduce the number of tokens found, adding the n-grams added many more tokens, which severely slowed down the machine learning algorithms.
+
+\section{Algorithm Selection}
+
+In an attempt to cover a breadth of options, eight algorithms were applied and optimized. These algorithms fall into two basic categories:
+
+\begin{itemize}
+    \item Algorithms that run quickly (Decision Stump, Deep Learning, kNN, Naive Bayes, Perceptron, and SVM). These require minutes, at most, to create and apply a model across the entire corpus.
+    \item Algorithms that run slowly (LDA and Neural Network). These algoritms run slowly enough---LDA, unaided, takes well over an hour to apply its model---that some form of dimensionality reduction is warranted.
+\end{itemize}
+
+The "slow" algorithms present a problem with a time-critical application like text messaging. LDA, in particular, is very slow at applying a model, taking over an hour on my test machine. If LDA or Neural Network is to be viable in this situation, some form of dimensionality reduction is needed. (It should also be noted that the model application could well happen on a mobile device; Apple, for one, is known for running machine learning on iPhones for privacy reasons. In such cases algorithm speed is doubly important to save the user's battery.)
+
+The issue, however, is that dimensionality reduction itself can take a great deal of time. PCA, which provides the best results for both LDA and Neural Network, is also slow to run. To combat this I used a few weight-based token selectors, which ran much faster but, in general, provided worse results.
+
+\section{Results}
+
+\begin{table}[!t]
+\renewcommand{\arraystretch}{1.3}
+\caption{Best Performance of Each Algorithm}
+\label{Table 2}
+\centering
+\begin{tabular}{|c|c|c|c|}
+\hline
+Algorithm & Spam caught & Ham blocked & Accuracy \\ \hline
+Decision Stump: tok1 & 18.07\% & 0.47\% & 88.90\% \\ \hline
+Decision Stump: tok2 & 18.07\% & 0.47\% & 88.90\% \\ \hline
+Deep Learning: tok1 & 89.98\% & 0.12\% & 98.59\% \\ \hline
+Deep Learning: tok2 & \textbf{90.37}\% & 0.12\% & \textbf{98.64\%} \\ \hline
+kNN: tok1 & 78.98\% & 0.32\% & 96.98\% \\ \hline
+kNN: tok2 & 76.82\% & 0.47\% & 96.57\% \\ \hline
+LDA: tok1 & 76.23\% & 0.03\% & 96.87\% \\ \hline
+LDA: tok2 & 77.80\% & 0.03\% & 97.08\% \\ \hline
+Naive Bayes: tok1 & 88.41\% & 4.69\% & 94.41\% \\ \hline
+Naive Bayes: tok2 & 88.02\% & 4.69\% & 94.36\% \\ \hline
+Neural Network: tok1 & 88.80\% & 0.27\% & 98.30\% \\ \hline
+Neural Network: tok2 & 87.82\% & 0.21\% & 98.23\% \\ \hline
+Perceptron: tok1 & 86.25\% & 0.24\% & 98.00\% \\ \hline
+Perceptron: tok2 & 87.23\% & 0.29\% & 98.08\% \\ \hline
+SVM: tok1 & 72.10\% & 0.00\% & 96.36\% \\ \hline
+SVM: tok2 & 72.89\% & \textbf{0.00\%} & 96.46\% \\ \hline
+
+\end{tabular}
+\end{table}
+
+\subsection{Overall Results}
+
+The best results from each of the algorithms across both tokens is shown in Table 2, with the best results in each measurement bolded. The optimizations made to the three best-performing algorithms are discussed in the following sub-sections.
+
+Whereas the SMS paper deals with overall performance (that is, how well each algorithm finds both spam and legitimate messages) \cite{Paper}, my focus here is more nuanced. When filtering spam, it is of prime importance to block as few legitimate messages as possible. Failing to do so will result in frustrated customers wondering why some messages never get delivered. For this reason, the "Ham blocked" measure is key. In selecting the "best" optimization of an algorithms, blocking few true messages is given high weight, to the extent that, at times, a lower overall accuracy is accepted in order to minimize the blocking of legitimate text messages.
+
+In all the cases discussed below, token 2 proved the best way to split messages.
+
+\subsection{Deep Learning}
+
+\begin{table}[!t]
+\renewcommand{\arraystretch}{1.3}
+\caption{Deep Learning Activation Function Options}
+\label{Table 3}
+\centering
+\begin{tabular}{|c|c|c|c|}
+\hline
+Option & Spam caught & Ham blocked & Accuracy \\ \hline
+Rectifier & 83.10\% & 1.36\% & 96.61\% \\ \hline
+Tanh & 90.37\% & 0.12\% & 98.64\% \\ \hline
+Maxout & 58.35\% & 0.15\% & 94.43\% \\ \hline
+ExpRectifier & 93.32\% & 1.89\% & 97.48\% \\ \hline
+
+\end{tabular}
+\end{table}
+
+Deep Learning was the best performing algorithm overall, with scores that best the algorithms tried in the SMS paper (which did not run this algorithm) \cite{Paper}.
+
+Deep Learning is very sensitive to the activation function. The default, Rectifier, was considerably worse than Tanh. Using the default setting of two layers of 50 nodes each, the available activation functions produced the results in Table 3.
+
+Deep Learning also provides the ability to include dropouts in order to reduce the size of the network (and, I believe, to reduce overfitting). This proved ineffective when tried.
+
+\begin{table}[!t]
+\renewcommand{\arraystretch}{1.3}
+\caption{Deep Learning Hidden Layer Variations}
+\label{Table 4}
+\centering
+\begin{tabular}{|c|c|c|c|}
+\hline
+Layers & Spam Caught & Ham Blocked & Accuracy \\ \hline
+50 (one layer) & 91.94\% & 1.71\% & 97.46\% \\ \hline
+50, 20 & 90.18\% & 0.59\% & 98.21\% \\ \hline
+50, 50 & 90.37\% & \textbf{0.12}\% & 94.50\% \\ \hline
+100, 100 & 89.59\% & 0.35\% & 98.34\% \\ \hline
+100, 50 & 91.55\% & 0.56\% & 98.41\% \\ \hline
+60, 50 & 89.98\% & 0.21\% & 98.51\% \\ \hline
+50, 50 & 94.50\% & 1.71\% & 97.80\% \\ \hline
+
+\end{tabular}
+\end{table}
+
+In addition, RapidMiner lets you tune the size of the hidden layers. Experiments with a variety of options suggest that that default of two layers of 50 nodes each gives the best results. The variations attempted are shown in Table 4.
+
+\subsection{Neural Network}
+
+\begin{table}[!t]
+\renewcommand{\arraystretch}{1.3}
+\caption{Neural Network Preprocessing Options}
+\label{Table 5}
+\centering
+\begin{tabular}{|c|c|c|c|}
+\hline
+Preprocessing (Limit) & Spam Caught & Ham Blocked & Accuracy \\ \hline
+None & 70.73\% & 1.30\% & 95.05\% \\ \hline
+Info Gain (.008) & 75.64\% & 2.74\% & 94.44 \% \\ \hline
+Info Gain Ratio (.03)* & 0.00\% & 0.00\% & 86.95\% \\ \hline
+SVM (.008) & 58.15\% & 0.86\% & 93.79\% \\ \hline
+PCA, (.95)** & 87.82\% & 0.21\% & 98.23\% \\ \hline
+\end{tabular}
+
+\smallskip
+* Weights threshold higher as the lowest weight generated was .018
+
+** Done with 5 nodes in the hidden layer; the others used 10 nodes
+\end{table}
+
+Neural Network proves to be a very good classifier if provided with the right dimensionality reduction, with results falling just short of Deep Learning. It is also, next to LDA, the longest-running algorithm with no dimensionality reduction done beforehand.
+
+In an effort to improve Neural Network's performance I tried selecting tokens using several weight-based methods: 
+
+\begin{itemize}
+    \item Weights by Information Gain
+    \item Weights by Information Gain Ratio
+    \item Weights from SVM
+\end{itemize}
+
+As shown in Table 5, all of these methods resulted in lower accuracy, with SVM showing a small improvement in the proper classification of legitimate messages.
+
+It was only when I applied PCA for dimensionality reduction that Neural Network became a true contender. PCA greatly improved classification of both spam and legitimate messages, leaving it just short of Deep Learning in both measures. The use of PCA came at a cost, however: in my testing it took PCA over 250 ms to apply its model to each message. This delay makes PCA unfeasible for a time-sensitive setup like text messages---doubly so if the processing takes place on a mobile device. (Once PCA or another feature reduction took place, Neural Network proved quick.)
+
+\subsection{SVM}
+
+\begin{table}[!t]
+\renewcommand{\arraystretch}{1.3}
+\caption{SVM Options}
+\label{Table 6}
+\centering
+\begin{tabular}{|c|c|c|c|c|}
+\hline
+Kernel & C & Spam Caught & Ham Blocked & Accuracy \\ \hline
+dot & 1.0 & 72.89\% & 0.00\% & 96.46\% \\ \hline
+dot & 0.0 & 70.53\% & 0.00\% & 96.15 \% \\ \hline
+radial & 1.0 & 11.79\% & 0.00\% & 88.49\% \\ \hline
+polynomial & 1.0 & 28.88\% & 0.00\% & 90.72\% \\ \hline
+anova & 1.0 & 73.87\% & 0.15\% & 96.46\% \\ \hline
+epachnenikov & 1.0 & 11.79\% & 0.00\% & 88.49\% \\ \hline
+\end{tabular}
+\end{table}
+
+SVM gives intriguing results because, across almost every run, it perfectly identifies legitimate messages. This perfection likely would not translate into real life, but, as we shall see in the next section, an algorithm that identifies true messages with extreme accuracy is very useful even if its total accuracy is not as high as other algorithms.
+
+SVM in RapidMiner has two main variables: the kernel and the tolerance for mis-classification. \cite{RapidMiner} The default kernel (dot) and a small tolerance for mis-classification proved the best combination. Table 6 has a selection of the SVM optimizations.
+
+\section{Recommendations}
+
+Based on the results shown in Table 2, there is no single algorithm that accomplishes the three goals of this study. Put briefly, those goals are:
+
+\begin{enumerate}
+    \item Block as much spam as possible
+    \item Block few (ideally, no) legitimate messages
+    \item Apply a model quickly
+\end{enumerate}
+
+Neural network performs well overall, though trailing Deep Learning in both spam detection and avoiding the misclassification of legitimate messages. However, the time it takes to apply PCA to a test message to performan dimensionality reduction (\textgreater 250 ms) is unacceptable in a time-critical environment like text messaging.
+
+Deep Learning is the best at blocking spam, but it does block a small percentage of true messages (though less than 1 in 800). SVM, while far behind in spam detection (~73\% vs. ~90\%), is very, very good at identifying legitimate messages. In addition, both algorithms, run quickly, allowing them to be run without unduly delaying a text message; in addition, their short overall runtimes mean they can support larger training sets and/or frequent model updates). Both of these algorithms can play a role in a comprehensive spam filtering method:
+
+\begin{itemize}
+    \item SVM is best when the sender is known (in the user's address book, perhaps, or known to have replied to a previous message from this sender). In this scenario, where the sender can be assumed to be legitimate, SVM's ability to block very few true messages is preferable to the best spam filtering. SVM, though, works well enough at catching spam (>70\%) to provide some protection if a phone or phone number is hacked.
+    \item Deep Learning is best for unknown or suspicious text message senders. Deep Learning provides the best spam filtering (>90\%) with minimal blocking of legitimate messages (0.12\%), making it ideal for this scenario.
+\end{itemize}
+
+% needed in second column of first page if using \IEEEpubid
+%\IEEEpubidadjcol
+
+% An example of a floating figure using the graphicx package.
+% Note that \label must occur AFTER (or within) \caption.
+% For figures, \caption should occur after the \includegraphics.
+% Note that IEEEtran v1.7 and later has special internal code that
+% is designed to preserve the operation of \label within \caption
+% even when the captionsoff option is in effect. However, because
+% of issues like this, it may be the safest practice to put all your
+% \label just after \caption rather than within \caption{}.
+%
+% Reminder: the "draftcls" or "draftclsnofoot", not "draft", class
+% option should be used if it is desired that the figures are to be
+% displayed while in draft mode.
+%
+%\begin{figure}[!t]
+%\centering
+%\includegraphics[width=2.5in]{myfigure}
+% where an .eps filename suffix will be assumed under latex, 
+% and a .pdf suffix will be assumed for pdflatex; or what has been declared
+% via \DeclareGraphicsExtensions.
+%\caption{Simulation results for the network.}
+%\label{fig_sim}
+%\end{figure}
+
+% Note that the IEEE typically puts floats only at the top, even when this
+% results in a large percentage of a column being occupied by floats.
+% However, the Computer Society has been known to put floats at the bottom.
+
+
+% An example of a double column floating figure using two subfigures.
+% (The subfig.sty package must be loaded for this to work.)
+% The subfigure \label commands are set within each subfloat command,
+% and the \label for the overall figure must come after \caption.
+% \hfil is used as a separator to get equal spacing.
+% Watch out that the combined width of all the subfigures on a 
+% line do not exceed the text width or a line break will occur.
+%
+%\begin{figure*}[!t]
+%\centering
+%\subfloat[Case I]{\includegraphics[width=2.5in]{box}%
+%\label{fig_first_case}}
+%\hfil
+%\subfloat[Case II]{\includegraphics[width=2.5in]{box}%
+%\label{fig_second_case}}
+%\caption{Simulation results for the network.}
+%\label{fig_sim}
+%\end{figure*}
+%
+% Note that often IEEE papers with subfigures do not employ subfigure
+% captions (using the optional argument to \subfloat[]), but instead will
+% reference/describe all of them (a), (b), etc., within the main caption.
+% Be aware that for subfig.sty to generate the (a), (b), etc., subfigure
+% labels, the optional argument to \subfloat must be present. If a
+% subcaption is not desired, just leave its contents blank,
+% e.g., \subfloat[].
+
+
+% An example of a floating table. Note that, for IEEE style tables, the
+% \caption command should come BEFORE the table and, given that table
+% captions serve much like titles, are usually capitalized except for words
+% such as a, an, and, as, at, but, by, for, in, nor, of, on, or, the, to
+% and up, which are usually not capitalized unless they are the first or
+% last word of the caption. Table text will default to \footnotesize as
+% the IEEE normally uses this smaller font for tables.
+% The \label must come after \caption as always.
+%
+%\begin{table}[!t]
+%% increase table row spacing, adjust to taste
+%\renewcommand{\arraystretch}{1.3}
+% if using array.sty, it might be a good idea to tweak the value of
+% \extrarowheight as needed to properly center the text within the cells
+%\caption{An Example of a Table}
+%\label{table_example}
+%\centering
+%% Some packages, such as MDW tools, offer better commands for making tables
+%% than the plain LaTeX2e tabular which is used here.
+%\begin{tabular}{|c||c|}
+%\hline
+%One & Two\\
+%\hline
+%Three & Four\\
+%\hline
+%\end{tabular}
+%\end{table}
+
+
+% Note that the IEEE does not put floats in the very first column
+% - or typically anywhere on the first page for that matter. Also,
+% in-text middle ("here") positioning is typically not used, but it
+% is allowed and encouraged for Computer Society conferences (but
+% not Computer Society journals). Most IEEE journals/conferences use
+% top floats exclusively. 
+% Note that, LaTeX2e, unlike IEEE journals/conferences, places
+% footnotes above bottom floats. This can be corrected via the
+% \fnbelowfloat command of the stfloats package.
+
+\section{Conclusion}
+
+Text messages, both in traditional SMS form as well as newer instant messaging apps, are a field ripe for spam. The short length of these messages can make gleaning enough information to filter spam messages difficult.
+
+Machine learning, however, provides a means of discovering spam messages with good results. Deep Learning and SVM, in particular, provide two useful choices: high absolute accuracy (Deep Learning) or extremely low instances of blocking legitimate messages (SVM). Used in combination, these two algorithms provide robust spam protection.
+
+% Can use something like this to put references on a page
+% by themselves when using endfloat and the captionsoff option.
+\ifCLASSOPTIONcaptionsoff
+  \newpage
+\fi
+
+
+
+% trigger a \newpage just before the given reference
+% number - used to balance the columns on the last page
+% adjust value as needed - may need to be readjusted if
+% the document is modified later
+%\IEEEtriggeratref{8}
+% The "triggered" command can be changed if desired:
+%\IEEEtriggercmd{\enlargethispage{-5in}}
+
+% references section
+
+% can use a bibliography generated by BibTeX as a .bbl file
+% BibTeX documentation can be easily obtained at:
+% http://mirror.ctan.org/biblio/bibtex/contrib/doc/
+% The IEEEtran BibTeX style support page is at:
+% http://www.michaelshell.org/tex/ieeetran/bibtex/
+%\bibliographystyle{IEEEtran}
+% argument is your BibTeX string definitions and bibliography database(s)
+%\bibliography{IEEEabrv,../bib/paper}
+%
+% <OR> manually copy in the resultant .bbl file
+% set second argument of \begin to the number of references
+% (used to reserve space for the reference number labels box)
+\begin{thebibliography}{1}
+
+\bibitem{Paper}
+Almeida, Tiago A., José María G. Hidalgo, and Akebo Yamakami. "Contributions to the study of SMS spam filtering: new collection and results." Proceedings of the 11th ACM symposium on Document engineering. ACM, 2011.
+
+\bibitem{SMS Collection}
+Almeida, Tiago A, and José María Gómez Hidalgo. “SMS Spam Collection v. 1.” SMS Spam Collection, www.dt.fee.unicamp.br/\textasciitilde tiago/smsspamcollection/. 
+
+\bibitem{RapidMiner}
+RapidMiner Studio Free Edition. (2018). RapidMiner GmbH.
+
+\bibitem{Site Ref 1}
+https://community.rapidminer.com/discussion/34303/text-analysis-on-documents-collection-coming-from-a-csv.
+
+\bibitem{Site Ref 2}
+https://stackoverflow.com/questions/15878053/how-to-test-on-testset-using-rapidminer
+
+\bibitem{Site Ref 3}
+https://community.rapidminer.com/discussion/31723/text-mining-and-the-word-list
+
+\bibitem{Site Ref 4}
+https://www.quora.com/What-are-the-best-machine-learning-techniques-for-text-classification
+
+\end{thebibliography}
+
+
+% that's all folks
+\end{document}
+
+
